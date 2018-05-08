@@ -5,7 +5,7 @@ import json
 import BaiduOCR
 import RandomExpression
 
-def Init():
+def init():
     BaiduOCR.GetToken()
 
 def GetResponse_Kw(keyword):
@@ -36,7 +36,7 @@ def GetImage(url):
 
 if __name__=='__main__':
     BaiduOCR.GetToken()
-    imgUrl=GetResponse('666.jpg')
+    imgUrl=GetResponse('temp/imgSave')
     if imgUrl ==None:
         imgPath=RandomExpression.GetRandomExp()
     else:

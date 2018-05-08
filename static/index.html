@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>微信机器人</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+<!--		<link href="css/index.css" rel="stylesheet" />-->
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+	    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/index.js"></script>
+	    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	    <script>
+	    	$(window).ready(function(){
+	    		init();
+	    	});
+	    </script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">微信机器人</h1>
+		</header>
+		<div class="mui-content">
+			<div style="padding: 5px 0;">
+				<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号:</label>
+					<input id="user" type="text" class="mui-input-clear" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>密码:</label>
+					<input id="passwd" type="password" class="mui-input-password" placeholder="" />
+				</div>
+				</form>
+				<div style="padding: 10px 5px;">
+					<button id='submitBtn' type="button" class="mui-btn mui-btn-success mui-btn-block">Login</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -4,6 +4,10 @@ import RandomExpression
 import DouTuLa
 import Turing
 
+def init():
+    DouTuLa.init()
+
+
 def handle(msg):
     if msg.type==TEXT:
         print msg.sender,'>>>',msg.text
@@ -12,14 +16,14 @@ def handle(msg):
         print msg.sender,'<<<',res
         msg.reply_msg(u'「AI」'+res)
     elif msg.type==PICTURE:
-        print msg.sender,'>>>收到表情'
+        print msg.sender,'>>>receive a picture'
         msg.get_file('temp/imgSave')
         imgUrl=DouTuLa.GetResponse('temp/imgSave')
-        if imgUrl ==None:
+        if imgUrl is None:
             imgPath=RandomExpression.GetRandomExp()
         else:
             imgPath=DouTuLa.GetImage(imgUrl)
         msg.reply_image(imgPath)
-        print msg.sender,'<<<回复表情',imgPath
+        print msg.sender,'<<<response a picture',imgPath
     elif msg.type==RECORDING:
         pass

@@ -1,7 +1,8 @@
 # WeChatRobot 微信自动回复机器人
-## 利用wxpy框架，通过微软小冰微博爬取，实现信息转发。
-## 实现微博扫码登录
-## v1.3更新：能够读取小冰的图片，并且转发到微信
-### BaiduTranstion默认不开启，需要自行到百度开发者平台申请ApiKey
-### 百度OCR默认开启，用于对于图片文字的读取，也不提供ApiKey，需要自行申请
-### 在windows+python2.7下测试成功
+## 利用wxpy框架+图灵机器人
+## 特性：运行在服务器的版本，可以通过网页访问，扫码二维码登录启动并管理机器人
+需要的python package:flask MySQLdb 
+需要预装mysql环境，mysql账户、密码配置在DataBase.py文件内,mysql数据库配置文件为robot.sql
+因为懒得写密码加密，表单传输过程使用明文![avatar](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=372837488,2096860054&fm=27&gp=0.jpg)
+为保证私密，不保存微信缓存文件
+不提供百度OCR的APIKey 和图灵机器人的APIKey

@@ -1,0 +1,17 @@
+.title{
+	padding:10px 0px 10px 10px;
+}
+.selfName{
+	font-size: 42px;
+	padding: 10px;
+}
+img.qrCodeContainer{
+	max-width: 300px;
+	max-height: 300px;
+}
+div.qrCodeContainer{
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding: 20px 100px;
+}
