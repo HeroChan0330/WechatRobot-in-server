@@ -7,9 +7,9 @@ accessToken=''
 #需要自行添加appId apiKey secretKey
 def GetToken():
     global accessToken
-    appId=''
-    apiKey=''
-    secretKey=''
+    appId='10836585'
+    apiKey='XpejK6BMMVWj8ckVKOLrLW4V'
+    secretKey='TRtPzUQa5wGsklUIQ2HUrtYnWhNQvjmW'
     url='https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=%s&client_secret=%s'
     res=requests.post(url%(apiKey,secretKey))
     data=json.loads(res.text)

@@ -18,7 +18,7 @@ def DownLoad(url):
         fileName=url[url.rfind('/')+1:]
         res=requests.get(url,timeout=100,headers={'Referer':'https://image.baidu.com/','User-Agent':'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36'})
         if res.status_code==200:
-            with open('Expressions\\'+fileName,'wb') as fp:
+            with open('Expressions/'+fileName,'wb') as fp:
                 fp.write(res.content)
                 fp.close()
     except:

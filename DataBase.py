@@ -7,7 +7,7 @@ import time
 cursor=None
 database=None
 
-sql_keywords=["\"","'","and","exec","insert","select","delete","update","count","*","%","chr","mid","master","truncate","char","declare",";","or","-","+",","]
+sql_keywords=["\"","'",";","-","+",","]
 
 def secureCheck(inputs):#if the context inputed contains the keyword,return false
     global sql_keywords
@@ -20,7 +20,7 @@ def secureCheck(inputs):#if the context inputed contains the keyword,return fals
 def connect():
     global cursor,database
     sqlUser='wechat_robot'
-    sqlPw='H123456'
+    sqlPw='123456'
     sqlDB='wechat_robot'
     # 打开数据库连接
     database = MySQLdb.connect("localhost", sqlUser, sqlPw, sqlDB, charset='utf8' )
@@ -36,6 +36,15 @@ def search(user,passwd):
         return None
     return result[0]
 
+def checkAccess(user,access):
+    global cursor,database
+    query="select name,access from user where name='%s' AND access='%s';"%(user,access)
+    cursor.execute(query)
+    result=cursor.fetchall()
+    if len(result)==0:
+        return False
+    return True
+    
 def updateAccess(user,passwd):
     global cursor,database
     md5=hashlib.md5()
@@ -49,6 +58,7 @@ def updateAccess(user,passwd):
     return access
 
 if __name__=='__main__':
-    connect()
-    print search('HeroChan','123456')
-    print updateAccess('HeroChan','123456')
+    # connect()
+    # print search('HeroChan','123456')
+    # print updateAccess('HeroChan','123456')
+    print secureCheck(['Javons','HelloWorld'])
