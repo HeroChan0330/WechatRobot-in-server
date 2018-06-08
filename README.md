@@ -5,5 +5,5 @@
 需要预装mysql环境，mysql账户、密码配置在DataBase.py文件内,mysql数据库配置文件为robot.sql
 因为懒得写密码加密，表单传输过程使用明文![avatar](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=372837488,2096860054&fm=27&gp=0.jpg)
 为保证私密，不保存微信缓存文件
-### TODO:设置页面增加一键群发等功能
+### TODO:设置页面增加一键群发等功能[已完成]
 ###      表单加密传输
