@@ -16,6 +16,9 @@ class WechatClient:
     targetListened_Name=[]#被监听的对象昵称
     friends_groups=[]
     friendList_JsonStr=''
+    friendList=[]
+    
+    logOutCallBackFunc=None
 
     def __init__(self,qrCodePath):
         self.qrCodePath=qrCodePath
@@ -23,7 +26,7 @@ class WechatClient:
     def robotInit(self,threadName, delay):
         threadLock = threading.Lock()
         threadLock.acquire()
-        self.robot=Bot(cache_path=self.cachePath,console_qr=self.consoleQR,qr_callback=self.qrCallback)
+        self.robot=Bot(cache_path=self.cachePath,console_qr=self.consoleQR,qr_callback=self.qrCallback,logout_callback=self.logoutCallback)
         self.loginCallback()
         #艹这里等待输入的时候堵塞线程了。。。。
         #TODO:用另外一个线程执行这个等待操作，或者找找有没有回调函数不堵塞线程
@@ -58,16 +61,17 @@ class WechatClient:
         res_dict={"friend":[],"group":[]}
         index=0
         for friend in self.robot.friends():
-            temp={'index':index,'name':friend.name.encode('utf-8')}
+            temp={'index':index,'name':friend.name.encode('utf-8'),'checked':False}
             #print friend.name.encode('utf-8')
             res_dict['friend'].append(temp)
             index+=1
         #index=0
         for group in self.robot.groups():
-            temp={'index':index,'name':group.name.encode('utf-8')}
+            temp={'index':index,'name':group.name.encode('utf-8'),'checked':False}
             res_dict['group'].append(temp)
             index+=1
         self.friendList_JsonStr=json.dumps(res_dict,encoding='utf-8',ensure_ascii=False)
+        self.friendList=res_dict
         self.friends_groups=self.robot.friends()+self.robot.groups()
         self.logined=True
 
@@ -104,8 +108,14 @@ class WechatClient:
             return json.dumps(res,ensure_ascii=False)
 
     def getList(self):
-        return self.friendList_JsonStr
+        # return self.friendList_JsonStr
+        return self.friendList
 
+    def logoutCallback(self):
+        print 'Log Out!!!'
+        if self.logOutCallBackFunc is not None:
+            self.logOutCallBackFunc(self)
+            self.exit()
     
 if __name__=='__main__':
     wechatClient=WechatClient('1.png')

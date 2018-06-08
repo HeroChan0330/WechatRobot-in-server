@@ -15,3 +15,8 @@ div.qrCodeContainer{
 	height: 100%;
 	padding: 20px 100px;
 }
+textarea.msg{
+	margin-left: 10px;
+	margin-right: 10px;
+	width: 100%;
+}

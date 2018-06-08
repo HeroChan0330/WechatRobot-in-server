@@ -19,6 +19,12 @@ def start():
     with app.test_request_context():
         url_for('static', filename='index.html')
     app.run(host='0.0.0.0')
+
+def onLogOut(robot):
+    global robots
+    for key,value in robots.items():
+        if value==robot:
+            del robots[key]
     
 
 # @app.route("/")
@@ -57,6 +63,7 @@ def startRobotResponse():
     else:
         robots[user]=WechatClient('static/QRCode_%s.png'%user)
         robots[user].start()
+        robots[user].logOutCallBackFunc=onLogOut
         return 'starting'
 
 @app.route("/static/RobotCommand",methods=['GET'])
@@ -74,12 +81,28 @@ def robotCommandResponse():
     if command=='GetState':
         return robot.getState(user)
     elif command=='GetList':
-        return robot.getList()
+        friendList=robot.getList()
+        his=DataBase.getListenedHis(user)
+        for chat in friendList['group']+friendList['friend']:
+            if chat['name'].decode('utf-8') in his:
+                chat['checked']=True
+        return json.dumps(friendList)
     elif command=='Listen':
         value=request.args['value']
         robot.listen(value)
         res={'state':'success','listen':robot.targetListened_Name}
+        DataBase.updateListenedHis(user,json.dumps(robot.targetListened_Name,encoding='utf-8',ensure_ascii=False))
         return json.dumps(res,encoding='utf-8',ensure_ascii=False)
+    elif command=='GroupMsg':
+        msg=request.args['msg'].decode('utf-8')
+        for chat in robot.targetListened_Obj:#这里如果列表包括自己微信号，会报错，所以直接暴力try
+            try:
+                chat.send_msg(msg)
+                pass
+            except:
+                pass
+            
+        return 'success'
     elif command=='Stop':
         robot.stop()
         return 'success'
@@ -89,6 +112,8 @@ def robotCommandResponse():
         return 'success'
     else:
         return 'Bad request'
+
+
 
 
 if __name__ == '__main__':

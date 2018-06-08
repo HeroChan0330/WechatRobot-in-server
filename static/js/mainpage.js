@@ -19,6 +19,18 @@ function init(){
 			
 		});
 	});
+	$("#opositeSelectedBtn").click(function(){
+		var friends=$(".friendItem");
+		var res='';
+		for(var i=0;i<friends.length;i++){
+			if(friends[i].checked){
+				friends[i].checked=false;
+			}
+			else{
+				friends[i].checked=true;
+			}
+		}
+	});
 	$("#stopListenBtn").click(function(){
 		$.get('RobotCommand',{'command':'Stop'},function(data,status){
 		
@@ -28,6 +40,10 @@ function init(){
 		$.get('RobotCommand',{'command':'Exit'},function(data,status){
 		
 		});
+	});
+	$("#groupMsgBtn").click(function(){
+		var msg=$("#groupMsgText")[0].value;
+		groupMsg(msg);
 	});
 	//getList();
 	setInterval("update()",5000);
@@ -41,12 +57,18 @@ function getList(){
 		var content='<div class="title">好友</div>';
 		for(var i=0;i<list['friend'].length;i++){
 			var item=list['friend'][i];
-			content+='<li class="mui-table-view-cell mui-radio mui-left"><input class="friendItem" name="'+item['index']+'" type="radio">'+item['name']+'</li>';
+			content+='<li class="mui-table-view-cell mui-radio mui-left"><input class="friendItem" name="'
+			+item['index']+'" type="radio" '
+			+(item['checked']?'checked':'')
+			+'>'+item['name']+'</li>';
 		}
 		content+='<div class="title">群组</div>';
 		for(var i=0;i<list['group'].length;i++){
 			var item=list['group'][i];
-			content+='<li class="mui-table-view-cell mui-radio mui-left"><input class="friendItem" name="'+item['index']+'" type="radio">'+item['name']+'</li>';
+			content+='<li class="mui-table-view-cell mui-radio mui-left"><input class="friendItem" name="'
+			+item['index']+'" type="radio" '
+			+(item['checked']?'checked':'')
+			+'">'+item['name']+'</li>';
 		}
 		//console.log(content);
 		$("#friendList").html(content);
@@ -67,6 +89,13 @@ function update(){
 		var res=JSON.parse(data);
 		if(res['logined']=='1'){
 			setInfo(res);
+		}
+		else if(res['logined']=='0'){
+//			alert('已退出');
+//			$(".qrCodeContainer").css("display",'block');
+//			$(".qrCodeContainer").attr('src','');
+//			$(".qrCodeContainer").html("已退出");
+			$("#friendList").html('');
 		}
 	});
 }
@@ -92,3 +121,8 @@ function login(){
 	if(!logined) setTimeout(login,1000);
 }
 
+function groupMsg(msg){
+	$.get('RobotCommand',{'command':'GroupMsg','msg':msg},function(data,status){
+		
+	});
+}

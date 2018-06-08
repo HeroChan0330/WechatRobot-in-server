@@ -3,6 +3,7 @@
 import MySQLdb
 import hashlib
 import time
+import json
 
 cursor=None
 database=None
@@ -20,7 +21,7 @@ def secureCheck(inputs):#if the context inputed contains the keyword,return fals
 def connect():
     global cursor,database
     sqlUser='wechat_robot'
-    sqlPw='123456'
+    sqlPw='H123456'
     sqlDB='wechat_robot'
     # 打开数据库连接
     database = MySQLdb.connect("localhost", sqlUser, sqlPw, sqlDB, charset='utf8' )
@@ -57,8 +58,27 @@ def updateAccess(user,passwd):
     database.commit()   
     return access
 
+def updateListenedHis(user,his):
+    global cursor,database
+    query="update user set his='%s' where name='%s';"%(his,user)
+    # print query
+    cursor.execute(query)
+    database.commit()
+
+def getListenedHis(user):
+    global cursor,database
+    query="select name,his from user where name='%s';"%(user)
+    cursor.execute(query)
+    result=cursor.fetchall()
+    if len(result)==0:
+        return None
+    res=json.loads(result[0][1],encoding='utf-8')
+    return res
+
+
 if __name__=='__main__':
-    # connect()
+    connect()
     # print search('HeroChan','123456')
     # print updateAccess('HeroChan','123456')
-    print secureCheck(['Javons','HelloWorld'])
+    #  print secureCheck(['Javons','HelloWorld'])
+    updateListenedHis('HeroChan',json.dumps(["Hero Chan", "HeroChan"],encoding='utf-8',ensure_ascii=False))

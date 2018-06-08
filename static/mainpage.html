@@ -13,7 +13,7 @@
 		<link href="css/mainpage.css" rel="stylesheet" />
 		<!--App自定义的css-->
 		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
-	    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="js/mainpage.js"></script>
 	</head>
 
@@ -29,6 +29,7 @@
 			}
 		</style>
 		<header class="mui-bar mui-bar-nav">
+			<button id="opositeSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;float:left;">反选</button>
 			<h1 class="mui-title">微信机器人</h1>
 			<button id="friendSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;">确定</button>
 		</header>
@@ -69,7 +70,11 @@
 						</div>
 					</div>
 					<div id="item3mobile" class="mui-slider-item mui-control-content">
-
+						<p class="">群发消息</p>
+						<div class="mui-input-row" style="margin: 10px 5px;">
+							<textarea id="groupMsgText" rows="5" placeholder="群发消息"></textarea>
+						</div>
+						<button type="button" id="groupMsgBtn" class="mui-btn mui-btn-success mui-btn-block">一键群发</button>
 					</div>
 				</div>
 			</div>
@@ -92,8 +97,11 @@
 			document.getElementById('slider').addEventListener('slide', function(e) {
 				if (e.detail.slideNumber === 1) {
 					$("#friendSelectedBtn").css("display","inline");
+					$("#opositeSelectedBtn").css("display","inline");
+					
 				}else{
 					$("#friendSelectedBtn").css("display","none");
+					$("#opositeSelectedBtn").css("display","none");
 				}
 			});
 		</script>
