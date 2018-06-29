@@ -36,12 +36,16 @@ def loginResponse():
     global cursor,database
     user=request.form.get('user')
     passwd=request.form.get('passwd')
+    salt=request.form.get('salt')
+
     print user,' ',passwd
-    if user is None or passwd is None:
+    if user is None or passwd is None or salt is None:
         return 'Bad request'
     if not DataBase.secureCheck([user,passwd]):
         return 'Bad request'
-    if DataBase.search(user,passwd) is None:
+    # if DataBase.search(user,passwd) is None:
+    #     return 'no account or password incorrect'
+    if not DataBase.login(user,passwd,salt):
         return 'no account or password incorrect'
     access=DataBase.updateAccess(user,passwd)
     resp=make_response('success')

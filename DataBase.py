@@ -21,12 +21,28 @@ def secureCheck(inputs):#if the context inputed contains the keyword,return fals
 def connect():
     global cursor,database
     sqlUser='wechat_robot'
-    sqlPw='H123456'
+    sqlPw='123456'
     sqlDB='wechat_robot'
     # 打开数据库连接
     database = MySQLdb.connect("localhost", sqlUser, sqlPw, sqlDB, charset='utf8' )
     # 使用cursor()方法获取操作游标
     cursor = database.cursor()
+
+def login(user,passwd,salt):
+    global cursor,database
+    query="select name,passwd from user where name='%s';"%(user)
+    cursor.execute(query)
+    result=cursor.fetchall()
+    if len(result)==0:
+        return False
+    key=user+result[0][1]+salt
+    md5=hashlib.md5()
+    md5.update(key)
+    key=md5.hexdigest()
+    if passwd==key:
+        return True
+    return False
+
 
 def search(user,passwd):
     global cursor,database
@@ -81,4 +97,4 @@ if __name__=='__main__':
     # print search('HeroChan','123456')
     # print updateAccess('HeroChan','123456')
     #  print secureCheck(['Javons','HelloWorld'])
-    updateListenedHis('HeroChan',json.dumps(["Hero Chan", "HeroChan"],encoding='utf-8',ensure_ascii=False))
+    # updateListenedHis('HeroChan',json.dumps(["Hero Chan", "HeroChan"],encoding='utf-8',ensure_ascii=False))
