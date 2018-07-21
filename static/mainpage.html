@@ -1,111 +1,118 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<title>微信机器人</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<head>
+	<meta charset="utf-8">
+	<title>微信机器人</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<!--标准mui.css-->
-		<link rel="stylesheet" href="css/mui.min.css">
-		<link href="css/mainpage.css" rel="stylesheet" />
-		<!--App自定义的css-->
-		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
-	    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="js/mainpage.js"></script>
-	</head>
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="css/mui.min.css">
+	<link href="css/mainpage.css" rel="stylesheet" />
+	<!--App自定义的css-->
+	<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="js/mainpage.js"></script>
+</head>
 
-	<body>
+<body>
 
-		<style>
-			.mui-control-content {
-				background-color: white;
-				min-height: 215px;
-			}
-			.mui-control-content .mui-loading {
-				margin-top: 50px;
-			}
-		</style>
-		<header class="mui-bar mui-bar-nav">
-			<button id="opositeSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;float:left;">反选</button>
-			<h1 class="mui-title">微信机器人</h1>
-			<button id="friendSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;">确定</button>
-		</header>
-		<div class="mui-content" style="position: absolute;bottom: 0;top: 0;">
-			<div id="slider" class="mui-slider" style="height: 100%;">
-				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<a class="mui-control-item" href="#item1mobile">状态</a>
-					<a class="mui-control-item" href="#item2mobile">选择好友</a>
-					<a class="mui-control-item" href="#item3mobile">设置</a>
-				</div>
-				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
-				<div class="mui-slider-group"style="height: 100%;padding-bottom: 30px;">
-					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-						<div class="qrCodeContainer">
-							<img src="" class="qrCodeContainer"/>
-						</div>
-						<div class="selfName">Nick Name</div>
-						<p style="padding: 2px 10px;">监听列表</p>
-						<div style="height: 200px;overflow-y: scroll;">
-							<ul class="mui-table-view registeredList">
-								
-							</ul>
-						</div>
-						<div style="padding: 0 20px;">
-							<button type="button" class="mui-btn mui-btn-success mui-btn-block" id='stopListenBtn'>停止监听</button>
-							<button type="button" class="mui-btn mui-btn-danger mui-btn-block" id='exitBtn'>退出</button>
-						</div>
+	<style>
+		.mui-control-content {
+			background-color: white;
+			min-height: 215px;
+		}
+
+		.mui-control-content .mui-loading {
+			margin-top: 50px;
+		}
+	</style>
+	<header class="mui-bar mui-bar-nav">
+		<button id="opositeSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;float:left;">反选</button>
+		<button id="clearSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;float:left;">清空</button>
+		<h1 class="mui-title">微信机器人</h1>
+		<button id="friendSelectedBtn" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="display: none;">确定</button>
+	</header>
+	<div class="mui-content" style="position: absolute;bottom: 0;top: 0;">
+		<div id="slider" class="mui-slider" style="height: 100%;">
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item" href="#item1mobile">状态</a>
+				<a class="mui-control-item" href="#item2mobile">选择好友</a>
+				<a class="mui-control-item" href="#item3mobile">更多</a>
+			</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+			<div class="mui-slider-group" style="height: 100%;padding-bottom: 30px;">
+				<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+					<div class="qrCodeContainer">
+						<img src="" class="qrCodeContainer" />
 					</div>
-					<div id="item2mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-						<div class="mui-scroll">
+					<div class="selfName">Nick Name</div>
+					<p style="padding: 2px 10px;">监听列表</p>
+					<div style="height: 200px;overflow-y: scroll;">
+						<ul class="mui-table-view registeredList">
+
+						</ul>
+					</div>
+					<div style="padding: 0 20px;">
+						<button type="button" class="mui-btn mui-btn-success mui-btn-block" id='stopListenBtn'>停止监听</button>
+						<button type="button" class="mui-btn mui-btn-danger mui-btn-block" id='exitBtn'>退出</button>
+					</div>
+				</div>
+				<div id="item2mobile" class="mui-slider-item mui-control-content">
+					<!-- <div class="mui-scroll-wrapper">
+						<div class="mui-scroll"> -->
+					<div style="height: 100%;">
+						<div style="height: 100%;overflow: scroll">
 							<ul class="mui-table-view" id='friendList'>
 								<li class="mui-table-view-cell mui-radio mui-left">
-									<input name="radio" type="radio">测试
+									<input name="radio" type="radio">好友列表加载中
 								</li>
 							</ul>
 						</div>
-						</div>
-					</div>
-					<div id="item3mobile" class="mui-slider-item mui-control-content">
-						<p class="">群发消息</p>
-						<div class="mui-input-row" style="margin: 10px 5px;">
-							<textarea id="groupMsgText" rows="5" placeholder="群发消息"></textarea>
-						</div>
-						<button type="button" id="groupMsgBtn" class="mui-btn mui-btn-success mui-btn-block">一键群发</button>
 					</div>
 				</div>
+				<div id="item3mobile" class="mui-slider-item mui-control-content">
+					<p class="">群发消息</p>
+					<div class="mui-input-row" style="margin: 10px 5px;">
+						<textarea id="groupMsgText" rows="5" placeholder="群发消息"></textarea>
+					</div>
+					<button type="button" id="groupMsgBtn" class="mui-btn mui-btn-success mui-btn-block">一键群发</button>
+				</div>
 			</div>
-
-
 		</div>
-		<script src="js/mui.min.js"></script>
-		<script>
-			mui.init({
-				swipeBack: false
+
+
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script>
+		mui.init({
+			swipeBack: false
+		});
+		(function ($) {
+			$('.mui-scroll-wrapper').scroll({
+				indicators: true //是否显示滚动条
 			});
-			(function($) {
-				$('.mui-scroll-wrapper').scroll({
-					indicators: true //是否显示滚动条
-				});
-			})(mui);
-			$(window).ready(function(){
-				init();
-			});
-			document.getElementById('slider').addEventListener('slide', function(e) {
-				if (e.detail.slideNumber === 1) {
-					$("#friendSelectedBtn").css("display","inline");
-					$("#opositeSelectedBtn").css("display","inline");
-					
-				}else{
-					$("#friendSelectedBtn").css("display","none");
-					$("#opositeSelectedBtn").css("display","none");
-				}
-			});
-		</script>
-		
-	</body>
+		})(mui);
+		$(window).ready(function () {
+			init();
+		});
+		document.getElementById('slider').addEventListener('slide', function (e) {
+			if (e.detail.slideNumber === 1) {
+				$("#friendSelectedBtn").css("display", "inline");
+				$("#opositeSelectedBtn").css("display", "inline");
+				$("#clearSelectedBtn").css("display", "inline");
+
+
+			} else {
+				$("#friendSelectedBtn").css("display", "none");
+				$("#opositeSelectedBtn").css("display", "none");
+				$("#clearSelectedBtn").css("display", "none");
+			}
+		});
+	</script>
+
+</body>
 
 </html>
