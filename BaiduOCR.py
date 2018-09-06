@@ -35,7 +35,7 @@ def BaiduOCR(imagePath):
     keywords=''
     for word in reqJson['words_result']:
         #print word['words']
-        keywords+=word['words']+' '
+        keywords+=word['words'].encode('utf-8')+' '
     return keywords
 
 def BaiduOCR_Stream(stream):

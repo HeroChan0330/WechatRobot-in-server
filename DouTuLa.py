@@ -4,14 +4,23 @@ import requests
 import json
 import BaiduOCR
 import RandomExpression
+import urllib
 
 def init():
     BaiduOCR.GetToken()
 
 def GetResponse_Kw(keyword):
-    url='https://www.doutula.com/api/search?keyword=%s&mime=0&page=2'
-    req=requests.get(url%keyword)
-    reqJson=json.loads(req.text)
+    url='https://www.doutula.com/api/search?keyword=%s&mime=0&page=0'%urllib.quote(keyword)
+    reqHeaders={
+        'user-agent': 'Mozilla/5.0 (Windows; Windows NT 6.1) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46',
+        'pragma': 'no-cache',
+        'upgrade-insecure-requests': '1'
+    }
+    req=requests.get(url,headers=reqHeaders)
+    # req.encoding='gbk'
+    # print(url)
+    # print(req.text)
+    reqJson=json.loads(req.text,encoding='utf-8')
     cnt=len(reqJson['data']['list'])
     index=int(random.uniform(0,cnt))
     return reqJson['data']['list'][index]['image_url']
