@@ -4,6 +4,7 @@ import MsgHandler
 import json
 import thread
 import threading
+from StopThread import stopThread
 
 class WechatClient:
     hasQRCode=False#是否获得登录二维码
@@ -19,11 +20,12 @@ class WechatClient:
     friendList=[]
     
     logOutCallBackFunc=None
-
+    roboThread=None
     def __init__(self,qrCodePath):
         self.qrCodePath=qrCodePath
 
-    def robotInit(self,threadName, delay):
+
+    def robotInit(self):
         threadLock = threading.Lock()
         threadLock.acquire()
         self.robot=Bot(cache_path=self.cachePath,console_qr=self.consoleQR,qr_callback=self.qrCallback,logout_callback=self.logoutCallback)
@@ -34,8 +36,19 @@ class WechatClient:
         self.robot.register(self.robot.friends()+self.robot.groups(),[TEXT,PICTURE])(self.response)
         threadLock.release()
     
+    def autoStopThread(self):
+        self.logoutCallback()
+        # self.exit()
+        # print("auto del")
+        # del self
+
     def start(self):
-        thread.start_new_thread( self.robotInit, ("InitThread", 2, ) )
+        self.roboThread=threading.Thread(target=self.robotInit)
+        self.roboThread.start()
+        timer=threading.Timer(60,self.autoStopThread)
+        #一分钟不扫码登录自动退出线程
+        timer.start()
+        # thread.start_new_thread( self.robotInit, ("InitThread", 2, ) )
         #self.robot=Bot(cache_path=self.cachePath,console_qr=self.consoleQR,qr_callback=self.qrCallback)
         #self.loginCallback()
         # 艹这里等待输入的时候堵塞线程了。。。。
@@ -91,10 +104,12 @@ class WechatClient:
 
     def exit(self):
         # self.robot.stop()
+        stopThread(self.roboThread)
         self.stop()
+        if self.logined:
+            self.robot.logout()
         self.logined=False
         self.hasQRCode=False
-        self.robot.logout()
 
     def getState(self,access):
         if self.logined:
